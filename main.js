@@ -111,7 +111,7 @@ define(function(require, exports, module) {
                     
                     // console.log(syntax);
                     var result = new $.Deferred();
-                    var inlineWidget = new InlineDocsViewer(func.name,{SUMMARY:summary, SYNTAX: syntax, RETURN: tags.r, URL:url, VALUES:parameters});
+                    var inlineWidget = new InlineDocsViewer(func.name,{SUMMARY:summary, SYNTAX: syntax, RETURN: tags.r, EXAMPLE: tags.e, URL:url, VALUES:parameters});
                     inlineWidget.load(hostEditor);
                     result.resolve(inlineWidget);
                     return result.promise();
@@ -419,6 +419,7 @@ define(function(require, exports, module) {
                 // afterwards the description can't start again
                 var canbe_des = true; // can be description
                 var params = [];
+                var examples = [];
                 // first line is /**, and last two ones are */ \n function
                 for (var i = 1; i < lines.length-2; i++) {
                     lines[i] = lines[i].trim(); // trim each line
@@ -460,8 +461,14 @@ define(function(require, exports, module) {
                     if (lines[i].substr(0,7) === '@return') {
                         tags.r = lines[i].substr(7).trim(); // delete @return and trim
                     }
+                    if (lines[i].substr(0,8) === '@example') {
+                    	var example_return = lines[i+1].trim();
+                    	var example_call   = lines[i+2].trim();
+                    	examples.push({'r':example_return,'c':example_call});
+                    }
                 }
                 tags.p = params;
+                tags.e = examples;
                 return tags;
             }
          }
