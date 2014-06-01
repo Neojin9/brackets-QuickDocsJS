@@ -60,7 +60,7 @@ define(function (require, exports, module) {
             return { value: valueInfo.t, description: valueInfo.d };
         });
         
-        var bottom_style = '', syntax_style = '', return_style = '';
+        var bottom_style = '', syntax_style = '', return_style = '', example_style = '';
         
         if (!jsPropDetails.URL) {
             bottom_style = 'display: none;';
@@ -70,6 +70,9 @@ define(function (require, exports, module) {
         }
         if (!jsPropDetails.RETURN) {
             return_style = 'display: none;';
+        }
+        if (!jsPropDetails.EXAMPLE) {
+            example_style = 'display: none;';
         }
        
         
